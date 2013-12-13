@@ -14,16 +14,15 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                               http://symfony.com/schema/dic/services/services-1.0.xsd"
->
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="sylius_blogger.repository.post.class">Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository</parameter>
+        <parameter key="sylius.repository.post.class">Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository</parameter>
     </parameters>
 
     <services>
-       <service id="sylius_blogger.repository.post" class="%sylius_blogger.repository.post.class%">
-            <argument type="service" id="sylius_blogger.manager.post" />
+       <service id="sylius.repository.post" class="%sylius.repository.post.class%">
+            <argument type="service" id="sylius.manager.post" />
             <argument type="service">
                 <service
                     factory-service="doctrine.orm.default_entity_manager"
@@ -31,11 +30,11 @@
                     class="Doctrine\ORM\Mapping\ClassMetadata"
                     public="false"
                 >
-                    <argument>%sylius_blogger.model.post.class%</argument>
+                    <argument>%sylius.model.post.class%</argument>
                 </service>
             </argument>
         </service>
-        <service id="sylius_blogger.manager.post" alias="doctrine.orm.entity_manager" />
+        <service id="sylius.manager.post" alias="doctrine.orm.entity_manager" />
     </services>
 
 </container>

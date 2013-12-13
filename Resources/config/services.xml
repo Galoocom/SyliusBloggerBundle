@@ -21,7 +21,7 @@
     </parameters>
 
     <services>
-        <service id="sylius_blogger.controller.post" class="%sylius_blogger.controller.post.class%">
+        <service id="sylius.controller.post" class="%sylius.controller.post.class%">
             <argument>sylius_blogger</argument>
             <argument>post</argument>
             <argument>SyliusBloggerBundle:Post</argument>
@@ -30,8 +30,8 @@
             </call>
         </service>
 
-        <service id="sylius_blogger.form.type.post" class="%sylius_blogger.form.type.post.class%">
-            <argument>%sylius_blogger.model.post.class%</argument>
+        <service id="sylius.form.type.post" class="%sylius.form.type.post.class%">
+            <argument>%sylius.model.post.class%</argument>
             <tag name="form.type" alias="sylius_blogger_post" />
         </service>
 

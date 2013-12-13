@@ -16,51 +16,26 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Sylius\Bundle\ResourceBundle\DependencyInjection\SyliusResourceExtension;
 
 /**
  * Blogger extension.
  *
  * @author Paweł Jędrzejewski <pjedrzejewski@diweb.pl>
+ * @author Laszlo Horvath <pentarim@gmail.com>
  */
-class SyliusBloggerExtension extends Extension
+class SyliusBloggerExtension extends SyliusResourceExtension
 {
     /**
      * {@inheritdoc}
      */
     public function load(array $config, ContainerBuilder $container)
     {
-        $processor = new Processor();
-        $configuration = new Configuration();
+        $this->configDir = __DIR__.'/../Resources/config';
 
-        $config = $processor->processConfiguration($configuration, $config);
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-
-        $driver = $config['driver'];
-        $engine = $config['engine'];
-
-        if (!in_array($driver, SyliusBloggerBundle::getSupportedDrivers())) {
-            throw new \InvalidArgumentException(sprintf('Driver "%s" is unsupported by SyliusBloggerBundle', $config['driver']));
-        }
-
-        $loader->load(sprintf('driver/%s.xml', $driver));
-
-        $container->setParameter('sylius_blogger.driver', $driver);
-        $container->setParameter('sylius_blogger.engine', $engine);
-
-        $loader->load('services.xml');
+        list($config) = $this->configure($config, new Configuration(), $container, self::CONFIGURE_LOADER | self::CONFIGURE_DATABASE | self::CONFIGURE_PARAMETERS);
 
         $container->setAlias('sylius_blogger.blamer.post', $config['services']['blamer']['post']);
-
-        $classes = $config['classes']['post'];
-
-        $container->setParameter('sylius_blogger.model.post.class', $classes['model']);
-        $container->setParameter('sylius_blogger.controller.post.class', $classes['controller']);
-        $container->setParameter('sylius_blogger.form.type.post.class', $classes['form']);
-
-        if (isset($classes['repository'])) {
-            $container->setParameter('sylius_blogger.repository.post.class', $classes['repository']);
-        }
     }
 
 }
