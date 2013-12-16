@@ -22,7 +22,7 @@
 
     <services>
         <service id="sylius.controller.post" class="%sylius.controller.post.class%">
-            <argument>sylius_blogger</argument>
+            <argument>sylius</argument>
             <argument>post</argument>
             <argument>SyliusBloggerBundle:Post</argument>
             <call method="setContainer">
@@ -32,7 +32,7 @@
 
         <service id="sylius.form.type.post" class="%sylius.form.type.post.class%">
             <argument>%sylius.model.post.class%</argument>
-            <tag name="form.type" alias="sylius_blogger_post" />
+            <tag name="form.type" alias="sylius_post" />
         </service>
 
         <service id="sylius_blogger.blamer.post.nooop" class="%sylius_blogger.blamer.post.nooop.class%" />

@@ -78,6 +78,6 @@ class PostType extends AbstractType
      */
     public function getName()
     {
-        return 'sylius_blogger_post';
+        return 'sylius_post';
     }
 }
